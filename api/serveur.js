@@ -140,7 +140,16 @@ app.post("/brawler", (req, res) => {
 });
 
 
-
+// DELETE /produits/2 -> supprime le produit n 2
+app.delete("/brawler/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = brawler.findIndex((p) => p.id === id);
+  if (index === -1) {                           // -1 = pas trouve
+    return res.status(404).json({ erreur: "brawler introuvable" });
+  }
+  brawler.splice(index, 1);                    // retire 1 element a cette position
+  res.status(200).json({ message: "brawler supprime" });
+});
 
 
 
