@@ -111,7 +111,10 @@ app.get("/brawler", (req, res) => {
 app.get("/", (req, res) => {
   res.json({ message: "Mon API fonctionne" });
 });
-
+// GET /produits -> renvoie tout le tableau
+app.get("/brawler", (req, res) => {
+  res.json(brawler);
+});
 // On demarre le serveur sur le port 3000
 app.listen(3000, () => {
   console.log("Serveur sur http://localhost:3000");
