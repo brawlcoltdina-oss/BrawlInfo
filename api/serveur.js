@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
+app.use(express.json()); // permet de lire req.body en JSON
 
-let brawler = [
-{ id:1, nom: "shelly", type: "degats bruts" },
+  let brawler = [
+  { id:1, nom: "shelly", type: "degats bruts" },
 { id: 2, nom: "colt", type: "degats bruts" },
 { id: 3, nom: "piper", type: "tir d'elite" },
 { id: 4, nom: "8-bit", type: "degats bruts" },
@@ -119,14 +120,24 @@ app.get("/brawler", (req, res) => {
 app.get("/brawler/:id", (req, res) => {
   const id = Number(req.params.id);            // ":id" arrive en texte -> on convertit
   const produit = brawler.find((p) => p.id === id);
-  if (!brawler) {                              // rien trouve
+  if (!produit) {                              // rien trouve
     return res.status(404).json({ erreur: "produit introuvable" });
   }
   res.json(produit);
 });
-
-
-
+// POST /produits -> ajoute un produit envoye dans le corps de la requete
+app.post("/brawler", (req, res) => {
+  if (!req.body.nom) {                          // donnee obligatoire manquante
+    return res.status(400).json({ erreur: "Le nom est obligatoire" });
+  }
+  const nouveau = {
+    id: brawler.length + 1,
+    nom: req.body.nom,
+    prix: req.body.prix
+  };
+  brawler.push(nouveau);                       // on ajoute au tableau
+  res.status(201).json(nouveau);                // 201 = cree
+});
 
 
 
