@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 let brawler = [
-{ id: 1, nom: "shelly", type: "degats bruts" },
+{ id:1, nom: "shelly", type: "degats bruts" },
 { id: 2, nom: "colt", type: "degats bruts" },
 { id: 3, nom: "piper", type: "tir d'elite" },
 { id: 4, nom: "8-bit", type: "degats bruts" },
@@ -103,7 +103,7 @@ let brawler = [
 { id: 99, nom: "kaze", type: "assassin" },
 { id: 100, nom: "sirius", type: "controle" }
 ];
-// GET /produits -> renvoie tout le tableau
+// GET /brawler -> renvoie tout le tableau
 app.get("/brawler", (req, res) => {
   res.json(brawler);
 });
@@ -111,10 +111,31 @@ app.get("/brawler", (req, res) => {
 app.get("/", (req, res) => {
   res.json({ message: "Mon API fonctionne" });
 });
-// GET /produits -> renvoie tout le tableau
+// GET /brawler -> renvoie tout le tableau
 app.get("/brawler", (req, res) => {
   res.json(brawler);
 });
+// GET /brawler/2 -> renvoie le brawler dont l id vaut 2
+app.get("/brawler/:id", (req, res) => {
+  const id = Number(req.params.id);            // ":id" arrive en texte -> on convertit
+  const produit = brawler.find((p) => p.id === id);
+  if (!brawler) {                              // rien trouve
+    return res.status(404).json({ erreur: "produit introuvable" });
+  }
+  res.json(produit);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 // On demarre le serveur sur le port 3000
 app.listen(3000, () => {
   console.log("Serveur sur http://localhost:3000");
