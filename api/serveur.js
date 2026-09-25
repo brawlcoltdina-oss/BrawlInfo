@@ -133,7 +133,7 @@ app.post("/brawler", (req, res) => {
   const nouveau = {
     id: brawler.length + 1,
     nom: req.body.nom,
-    prix: req.body.prix
+    prix: req.body.type
   };
   brawler.push(nouveau);                       // on ajoute au tableau
   res.status(201).json(nouveau);                // 201 = cree
